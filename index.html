@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="description" content="Plataforma de formación, mentorías y recursos en Reclutamiento Técnico y RRHH IT">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>IT HR Master - Reclutamiento Tech</title>
+
+    <!-- External Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Embedded Dynamic PWA Manifest -->
+    <script>
+        const pwaManifest = {
+            "name": "IT HR Master - Talent Tech App",
+            "short_name": "ITHR Master",
+            "start_url": "./index.html",
+            "display": "standalone",
+            "background_color": "#0f172a",
+            "theme_color": "#0369a1",
+            "orientation": "portrait-primary",
+            "icons": [
+                {
+                    "src": "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
+                    "sizes": "192x192",
+                    "type": "image/png",
+                    "purpose": "any maskable"
+                },
+                {
+                    "src": "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
+                    "sizes": "512x512",
+                    "type": "image/png"
+                }
+            ]
+        };
+        const manifestBlob = new Blob([JSON.stringify(pwaManifest)], {type: 'application/json'});
+        const manifestLink = document.createElement('link');
+        manifestLink.rel = 'manifest';
+        manifestLink.href = URL.createObjectURL(manifestBlob);
+        document.head.appendChild(manifestLink);
+    </script>
+
+    <!-- Custom CSS & Utilities -->
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .dark .glass-panel {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 5px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(148, 163, 184, 0.4);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 h-full flex flex-col justify-between transition-colors duration-200 selection:bg-brand-500 selection:text-white">
+
+    <!-- Top Navigation Header -->
+    <header class="sticky top-0 z-40 bg-slate-900/90 text-white backdrop-blur-md border-b border-slate-800 shadow-sm px-4 py-3">
+        <div class="max-w-6xl mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-cyan-500 flex items-center justify-center text-white shadow-lg shadow-brand-500/20 font-black text-lg">
+                    <i class="fa-solid fa-laptop-code"></i>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-base tracking-tight leading-none text-white">IT HR <span class="text-cyan-400">Master</span></h1>
+                    <p class="text-[11px] text-slate-400 font-medium">Reclutamiento & Talent Tech</p>
+                </div>
+            </div>
+
+            <!-- Actions & Status -->
+            <div class="flex items-center space-x-2">
+                <span id="pwaStatusBadge" class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Offline Ready
+                </span>
+
+                <button onclick="openGitHubInstructions()" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition" title="Instrucciones GitHub Pages">
+                    <i class="fa-brands fa-github text-lg"></i>
+                </button>
+
+                <button id="themeToggleBtn" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition">
+                    <i class="fa-solid fa-moon text-lg dark:hidden"></i>
+                    <i class="fa-solid fa-sun text-lg hidden dark:block text-amber-400"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-1 max-w-6xl w-full mx-auto p-4 sm:p-6 pb-24 lg:pb-8 custom-scrollbar overflow-y-auto">
+
+        <!-- PWA Install Banner Prompt -->
+        <div id="pwaInstallCard" class="hidden mb-6 p-4 rounded-2xl bg-gradient-to-r from-brand-600 to-indigo-600 text-white shadow-lg shadow-brand-500/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-white/20 backdrop-blur flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-download text-lg"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-sm">Instalar IT HR Master App</h3>
+                    <p class="text-xs text-brand-100">Instálala en tu móvil para acceder al instante sin conexión a internet.</p>
+                </div>
+            </div>
+            <button id="btnInstallApp" class="bg-white text-brand-700 hover:bg-brand-50 px-4 py-2 rounded-xl font-bold text-xs shadow-md transition shrink-0 self-end sm:self-auto">
+                Instalar Ahora
+            </button>
+        </div>
+
+        <!-- SECTION 1: CUESTIONARIO INTERACTIVO (QUIZ) -->
+        <section id="sec-quiz" class="app-section space-y-6">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 glass-panel p-6 rounded-3xl">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-brand-500 dark:text-cyan-400">Evaluación Técnica</span>
+                    <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white">Cuestionario de Reclutamiento IT</h2>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Ponte a prueba respondiendo casos reales sobre tecnologías, sourcing y filtrado de candidatos tech.</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="text-right">
+                        <span class="text-xs text-slate-400 block font-semibold">Puntuación Máxima</span>
+                        <span id="quizScoreDisplay" class="text-xl font-black text-brand-600 dark:text-cyan-400">0 pts</span>
+                    </div>
+                    <button onclick="resetQuiz()" class="p-3 bg-slate-200 dark:bg-slate-800 rounded-2xl hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold transition">
+                        <i class="fa-solid fa-rotate-right mr-1"></i> Reiniciar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Active Card Container -->
+            <div id="quizCard" class="glass-panel p-6 sm:p-8 rounded-3xl space-y-6 shadow-sm border border-slate-200 dark:border-slate-800">
+                <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-800 pb-4">
+                    <span id="quizProgressText" class="text-xs font-bold text-slate-500 dark:text-slate-400">Pregunta 1 de 5</span>
+                    <span id="quizCategoryBadge" class="text-[11px] font-bold px-3 py-1 rounded-full bg-brand-50 dark:bg-brand-900/40 text-brand-600 dark:text-cyan-400">Tecnologías Frontend/Backend</span>
+                </div>
+
+                <h3 id="quizQuestionText" class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white leading-relaxed">
+                    Cargando pregunta...
+                </h3>
+
+                <div id="quizOptionsContainer" class="space-y-3">
+                    <!-- Dynamic Question Buttons -->
+                </div>
+
+                <!-- Explanation Box -->
+                <div id="quizFeedbackBox" class="hidden p-4 rounded-2xl text-xs space-y-1 transition-all">
+                    <p id="quizFeedbackTitle" class="font-bold text-sm"></p>
+                    <p id="quizFeedbackDesc" class="text-slate-600 dark:text-slate-300 leading-relaxed"></p>
+                </div>
+
+                <div class="flex justify-end pt-2">
+                    <button id="btnNextQuestion" onclick="nextQuestion()" class="hidden bg-brand-600 hover:bg-brand-700 text-white font-bold px-6 py-3 rounded-xl text-xs transition flex items-center space-x-2">
+                        <span>Siguiente Pregunta</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: GUÍA DE EXCELENCIA RRHH IT -->
+        <section id="sec-guide" class="app-section space-y-6 hidden">
+            <div class="glass-panel p-6 rounded-3xl">
+                <span class="text-xs font-bold uppercase tracking-wider text-brand-500 dark:text-cyan-400">Manual del Recruiter Top</span>
+                <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white">Guía de Excelencia en RRHH IT</h2>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Sigue esta hoja de ruta estructurada y completa tus hábitos clave para destacar como IT Talent Acquisition.</p>
+                
+                <!-- Progress Indicator -->
+                <div class="mt-4 bg-slate-200 dark:bg-slate-800 h-2.5 rounded-full overflow-hidden">
+                    <div id="guideProgressBar" class="bg-gradient-to-r from-brand-500 to-emerald-400 h-full w-0 transition-all duration-300"></div>
+                </div>
+                <div class="flex justify-between items-center text-[11px] text-slate-500 mt-1.5 font-medium">
+                    <span id="guideProgressPercent">0% completado</span>
+                    <span id="guideProgressCount">0 de 0 hábitos listos</span>
+                </div>
+            </div>
+
+            <div id="guideModulesContainer" class="space-y-4">
+                <!-- Dynamic Modules & Checkable Habits -->
+            </div>
+        </section>
+
+        <!-- SECTION 3: MENTORÍAS CON EXPERTOS -->
+        <section id="sec-mentors" class="app-section space-y-6 hidden">
+            <div class="glass-panel p-6 rounded-3xl flex flex-col md:flex-row justify-between md:items-center gap-4">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-brand-500 dark:text-cyan-400">Networking & Crecimiento</span>
+                    <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white">Mentorías 1 a 1 con Expertos</h2>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Conecta con reclutadores e IT Talent Managers Sénior para acelerar tu carrera profesional.</p>
+                </div>
+                <button onclick="openBookingModal()" class="bg-brand-600 hover:bg-brand-700 text-white font-bold px-5 py-3 rounded-2xl text-xs transition shadow-md flex items-center space-x-2 shrink-0 self-start md:self-auto">
+                    <i class="fa-regular fa-calendar-check text-sm"></i>
+                    <span>Ver Mis Citas Agendadas</span>
+                </button>
+            </div>
+
+            <!-- Mentors List Grid -->
+            <div id="mentorsListGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- Dynamic Mentor Cards -->
+            </div>
+        </section>
+
+        <!-- SECTION 4: VÍDEOS & RECURSOS DE YOUTUBE -->
+        <section id="sec-youtube" class="app-section space-y-6 hidden">
+            <div class="glass-panel p-6 rounded-3xl">
+                <span class="text-xs font-bold uppercase tracking-wider text-brand-500 dark:text-cyan-400">Centro de Aprendizaje Multimedia</span>
+                <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white">Vídeos & Formación en YouTube</h2>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Masterclasses, tutoriales de sourcing y técnicas de atracción de talento tech seleccionadas.</p>
+                
+                <!-- Category Tabs -->
+                <div class="flex items-center space-x-2 overflow-x-auto pb-1 mt-4 custom-scrollbar text-xs font-semibold">
+                    <button onclick="filterVideos('all')" id="vcat-all" class="vcat-btn px-4 py-2 rounded-xl bg-brand-600 text-white shrink-0">Todos</button>
+                    <button onclick="filterVideos('Sourcing')" id="vcat-Sourcing" class="vcat-btn px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300 shrink-0">Sourcing Avanzado</button>
+                    <button onclick="filterVideos('Entrevistas')" id="vcat-Entrevistas" class="vcat-btn px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300 shrink-0">Entrevistas Técnicas</button>
+                    <button onclick="filterVideos('Marca')" id="vcat-Marca" class="vcat-btn px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300 shrink-0">Marca Empleadora</button>
+                    <button onclick="filterVideos('favs')" id="vcat-favs" class="vcat-btn px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300 shrink-0"><i class="fa-solid fa-heart text-red-500 mr-1"></i> Favoritos</button>
+                </div>
+            </div>
+
+            <!-- YouTube Video Grid -->
+            <div id="youtubeVideoGrid" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <!-- Dynamic Video Cards -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Navigation Bottom Bar (Mobile/Tablet Friendly) -->
+    <nav class="fixed bottom-0 left-0 right-0 z-40 bg-slate-900/95 backdrop-blur-md border-t border-slate-800 text-slate-400 py-2 px-4">
+        <div class="max-w-md mx-auto flex items-center justify-between">
+            <button onclick="switchTab('quiz')" id="tab-quiz" class="nav-tab-btn flex flex-col items-center space-y-1 text-cyan-400 font-bold transition w-1/4">
+                <i class="fa-solid fa-clipboard-question text-lg"></i>
+                <span class="text-[10px]">Cuestionario</span>
+            </button>
+            <button onclick="switchTab('guide')" id="tab-guide" class="nav-tab-btn flex flex-col items-center space-y-1 hover:text-cyan-400 transition w-1/4">
+                <i class="fa-solid fa-book-bookmark text-lg"></i>
+                <span class="text-[10px]">Guía RRHH</span>
+            </button>
+            <button onclick="switchTab('mentors')" id="tab-mentors" class="nav-tab-btn flex flex-col items-center space-y-1 hover:text-cyan-400 transition w-1/4">
+                <i class="fa-solid fa-user-tie text-lg"></i>
+                <span class="text-[10px]">Mentorías</span>
+            </button>
+            <button onclick="switchTab('youtube')" id="tab-youtube" class="nav-tab-btn flex flex-col items-center space-y-1 hover:text-cyan-400 transition w-1/4">
+                <i class="fa-brands fa-youtube text-lg"></i>
+                <span class="text-[10px]">Vídeos</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- MODAL: Booking Form & Appointments -->
+    <div id="bookingModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 space-y-5 max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-800 pb-3">
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <i class="fa-regular fa-calendar-check text-brand-600 dark:text-cyan-400"></i>
+                    <span id="bookingModalTitle">Reserva de Mentoría</span>
+                </h3>
+                <button onclick="closeBookingModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Mentorship Booking Form -->
+            <form id="mentorBookingForm" class="space-y-4">
+                <input type="hidden" id="bookingMentorName">
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 mb-1">Mentor Seleccionado</label>
+                    <input type="text" id="bookingMentorDisplay" readonly class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-semibold text-xs p-3 rounded-xl border-none outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 mb-1">Tu Nombre Completo *</label>
+                    <input type="text" id="bookingUserName" required placeholder="Ej. Laura Gómez" class="w-full bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-xs p-3 rounded-xl focus:ring-2 focus:ring-brand-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 mb-1">Temática de la Sesión *</label>
+                    <select id="bookingTopic" required class="w-full bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-xs p-3 rounded-xl focus:ring-2 focus:ring-brand-500 outline-none">
+                        <option value="Sourcing Avanzado y Filtros Booleanos">Sourcing Avanzado y Filtros Booleanos</option>
+                        <option value="Comprensión de Stacks Técnicos Tech">Comprensión de Stacks Técnicos Tech</option>
+                        <option value="Estrategias de InMail y Pitch para Candidatos">Estrategias de InMail y Pitch para Candidatos</option>
+                        <option value="Estructuración de Entrevistas Culturales & Fit">Estructuración de Entrevistas Culturales & Fit</option>
+                        <option value="Evolución de Carrera en Talent Acquisition">Evolución de Carrera en Talent Acquisition</option>
+                    </select>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 mb-1">Fecha Deseada *</label>
+                        <input type="date" id="bookingDate" required class="w-full bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-xs p-3 rounded-xl focus:ring-2 focus:ring-brand-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 mb-1">Hora Deseada *</label>
+                        <input type="time" id="bookingTime" required class="w-full bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-xs p-3 rounded-xl focus:ring-2 focus:ring-brand-500 outline-none">
+                    </div>
+                </div>
+                <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 rounded-xl text-xs transition shadow-lg shadow-brand-500/20">
+                    Confirmar Cita de Mentoría
+                </button>
+            </form>
+
+            <!-- Booked Sessions List Section -->
+            <div class="pt-4 border-t border-slate-200 dark:border-slate-800 space-y-3">
+                <h4 class="font-bold text-xs text-slate-500 uppercase tracking-wider">Tus Sesiones Agendadas</h4>
+                <div id="bookedAppointmentsList" class="space-y-2 max-h-40 overflow-y-auto custom-scrollbar">
+                    <!-- Dynamic Booked Items -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: GitHub Pages Deployment Instructions -->
+    <div id="githubModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 space-y-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-800 pb-3">
+                <h3 class="font-bold text-lg text-slate-900 dark:text-white flex items-center gap-2">
+                    <i class="fa-brands fa-github text-brand-500"></i> Publicación en GitHub Pages
+                </h3>
+                <button onclick="closeGitHubInstructions()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <p class="text-xs text-slate-600 dark:text-slate-300">Despliega gratis esta PWA completa en GitHub Pages en menos de 2 minutos:</p>
+
+            <ol class="space-y-3 text-xs text-slate-700 dark:text-slate-300">
+                <li class="flex items-start space-x-2">
+                    <span class="bg-brand-100 dark:bg-brand-900 text-brand-600 dark:text-cyan-400 font-bold px-2 py-0.5 rounded-md">1</span>
+                    <div>Crea un repositorio público en GitHub (ej. <code>rrhh-it-pwa</code>).</div>
+                </li>
+                <li class="flex items-start space-x-2">
+                    <span class="bg-brand-100 dark:bg-brand-900 text-brand-600 dark:text-cyan-400 font-bold px-2 py-0.5 rounded-md">2</span>
+                    <div>Guarda todo este código en un archivo llamado estrictamente <code>index.html</code>.</div>
+                </li>
+                <li class="flex items-start space-x-2">
+                    <span class="bg-brand-100 dark:bg-brand-900 text-brand-600 dark:text-cyan-400 font-bold px-2 py-0.5 rounded-md">3</span>
+                    <div>Sube el archivo <code>index.html</code> al repositorio.</div>
+                </li>
+                <li class="flex items-start space-x-2">
+                    <span class="bg-brand-100 dark:bg-brand-900 text-brand-600 dark:text-cyan-400 font-bold px-2 py-0.5 rounded-md">4</span>
+                    <div>Ve a <strong>Settings > Pages</strong>, elige la rama <code>main</code> y haz clic en <strong>Save</strong>.</div>
+                </li>
+            </ol>
+
+            <div class="bg-emerald-50 dark:bg-emerald-950/50 p-3 rounded-xl border border-emerald-200 dark:border-emerald-900/50 text-xs text-emerald-700 dark:text-emerald-300 font-medium">
+                <i class="fa-solid fa-check-circle mr-1"></i> HTTPS estará activado automáticamente, permitiendo la instalación PWA en teléfonos Android e iOS.
+            </div>
+
+            <button onclick="closeGitHubInstructions()" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 rounded-xl text-xs transition">
+                ¡Entendido!
+            </button>
+        </div>
+    </div>
+
+    <script>
+        /* ==========================================================================
+           DATA DEFINITIONS & STATE
+           ========================================================================== */
+
+        // 1. QUIZ DATA
+        const quizData = [
+            {
+                category: "Tecnologías & Frameworks",
+                question: "¿Cuál es la diferencia clave entre Java y Kotlin en el desarrollo de aplicaciones Android?",
+                options: [
+                    "Java es exclusivo para servidores backend, mientras que Kotlin solo sirve para interfaces web.",
+                    "Kotlin es un lenguaje moderno totalmente compatible con Java que reduce el código repetitivo y previene errores de NullPointer.",
+                    "Kotlin no se compila en bytecode de Java y requiere un emulador especial.",
+                    "Son idénticos y solo cambia el nombre del archivo."
+                ],
+                correct: 1,
+                explanation: "Kotlin es el lenguaje oficial recomendado por Google para Android. Es conciso, seguro contra nulos (Null Safety) e interoperable al 100% con Java."
+            },
+            {
+                category: "Backend Tech",
+                question: "Un perfil indica experiencia en Node.js y React.js. ¿Cómo definirías técnicamente a este candidato?",
+                options: [
+                    "Desarrollador Full Stack en ecosistema JavaScript / TypeScript.",
+                    "Administrador de Base de Datos SQL Relacional.",
+                    "Especialista exclusivo en Infraestructura Cloud DevOps.",
+                    "Diseñador de experiencia de usuario (UI/UX)."
+                ],
+                correct: 0,
+                explanation: "Node.js se ejecuta en el servidor (Backend) y React.js en el navegador (Frontend). La combinación de ambos domina el stack JS Full Stack."
+            },
+            {
+                category: "Sourcing Avanzado",
+                question: "¿Qué operador booleano utilizarías en LinkedIn Recruiter para buscar perfiles que sepan React O BIEN Angular?",
+                options: [
+                    "React AND Angular",
+                    "React OR Angular",
+                    "React NOT Angular",
+                    "React WITH Angular"
+                ],
+                correct: 1,
+                explanation: "El operador OR amplía la búsqueda para incluir candidatos que posean cualquiera de las dos tecnologías especificadas."
+            },
+            {
+                category: "Metodologías Ágiles",
+                question: "¿Cuál es el rol principal del Scrum Master en un equipo de desarrollo de software?",
+                options: [
+                    "Escribir las líneas de código más complejas de la aplicación.",
+                    "Facilitar los procesos ágiles, eliminar bloqueos y proteger la productividad del equipo.",
+                    "Negociar el salario de los programadores directamente.",
+                    "Decidir unilateralmente la fecha de lanzamiento sin consultar a los desarrolladores."
+                ],
+                correct: 1,
+                explanation: "El Scrum Master actúa como un líder facilitador que asegura la correcta implementación de las ceremonias Scrum y resuelve impedimentos."
+            },
+            {
+                category: "Entrevistas & Fit",
+                question: "¿Qué práctica es recomendable al realizar el primer filtrado telefónico/virtual con un candidato Senior IT?",
+                options: [
+                    "Hacerle programar en vivo un algoritmo complejo sin previo aviso durante 2 horas.",
+                    "Centrarse únicamente en el salario sin explicar el proyecto ni los desafíos técnicos.",
+                    "Explicar el stack técnico, la arquitectura del proyecto, la cultura del equipo y validar sus motivaciones reales de cambio.",
+                    "Exigirle que renuncie a su empleo actual antes de enviar su CV a la empresa cliente."
+                ],
+                correct: 2,
+                explanation: "Los perfiles tech valoran la transparencia en el stack tecnológico, la flexibilidad de trabajo (remoto/híbrido) y la claridad en los retos del proyecto."
+            }
+        ];
+
+        // 2. PRACTICAL GUIDE DATA
+        const guideModules = [
+            {
+                title: "Módulo 1: Dominio del Stack Tecnológico sin Programar",
+                icon: "fa-solid fa-code-branch",
+                habits: [
+                    { id: "h1", text: "Diferenciar claramente Frontend (React, Vue, Angular) de Backend (Java, Node, Python, C#)." },
+                    { id: "h2", text: "Comprender la diferencia entre bases de datos Relacionales (PostgreSQL, MySQL) y No Relacionales (MongoDB, Redis)." },
+                    { id: "h3", text: "Conocer los roles clave de Cloud & DevOps (AWS, Docker, Kubernetes, CI/CD)." }
+                ]
+            },
+            {
+                title: "Módulo 2: Sourcing de Alto Impacto en IT",
+                icon: "fa-solid fa-magnifying-glass-chart",
+                habits: [
+                    { id: "h4", text: "Dominar cadenas booleanas complejas (AND, OR, NOT, comillas y paréntesis) en LinkedIn y Google X-Ray." },
+                    { id: "h5", text: "Buscar talento técnico en plataformas nativas como GitHub, GitLab y Stack Overflow." },
+                    { id: "h6", text: "Personalizar InMails citando proyectos específicos o tecnologías mencionadas en el perfil del candidato." }
+                ]
+            },
+            {
+                title: "Módulo 3: Entrevistas Efectivas & Experiencia del Candidato",
+                icon: "fa-solid fa-comments text-brand-500",
+                habits: [
+                    { id: "h7", text: "Diseñar una Propuesta de Valor para el Candidato (EVP) clara que incluya modalidad de trabajo, salario y stack." },
+                    { id: "h8", text: "Coordinar evaluaciones técnicas respetuosas con el tiempo del desarrollador (evitar pruebas excesivas)." },
+                    { id: "h9", text: "Dar feedback constructivo y detallado a todos los candidatos tras las entrevistas." }
+                ]
+            }
+        ];
+
+        // 3. MENTORS DATA
+        const mentorsData = [
+            {
+                name: "Carlos Mendoza",
+                role: "VP of Talent Acquisition",
+                company: "Global Tech Solutions",
+                exp: "12+ años de experiencia",
+                specialty: "Estrategias de Sourcing Global & Liderazgo de Equipos IT",
+                rating: 4.9,
+                reviews: 48,
+                avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250"
+            },
+            {
+                name: "Elena Rostova",
+                role: "Senior Lead Tech Recruiter",
+                company: "Fintech Unicorn",
+                exp: "8+ años de experiencia",
+                specialty: "Atracción de Perfiles AI, Machine Learning & Senior Backend",
+                rating: 5.0,
+                reviews: 62,
+                avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=250"
+            },
+            {
+                name: "David Silva",
+                role: "IT Recruitment Manager",
+                company: "DevStudio Labs",
+                exp: "10+ años de experiencia",
+                specialty: "Entrevistas de Fit Cultural, Marca Empleadora & Retención Tech",
+                rating: 4.8,
+                reviews: 35,
+                avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=250"
+            }
+        ];
+
+        // 4. YOUTUBE RESOURCES DATA
+        const youtubeVideos = [
+            {
+                id: "v1",
+                title: "Curso de Sourcing Booleano Avanzado para Reclutadores IT",
+                channel: "Tech Talent Academy",
+                category: "Sourcing",
+                duration: "24 min",
+                youtubeUrl: "https://www.youtube.com/results?search_query=sourcing+booleano+reclutamiento+it",
+                thumbnail: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=400"
+            },
+            {
+                title: "Cómo entender la arquitectura de software sin saber programar",
+                channel: "Dev & HR Hub",
+                category: "Entrevistas",
+                duration: "18 min",
+                youtubeUrl: "https://www.youtube.com/results?search_query=arquitectura+de+software+para+recruiters",
+                thumbnail: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&q=80&w=400"
+            },
+            {
+                title: "Claves para redactar InMails en LinkedIn que los programadores responden",
+                channel: "IT Talent Growth",
+                category: "Sourcing",
+                duration: "15 min",
+                youtubeUrl: "https://www.youtube.com/results?search_query=inmail+linkedin+recruiting+it",
+                thumbnail: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&q=80&w=400"
+            },
+            {
+                title: "Estrategias de Marca Empleadora (Employer Branding) para atraer Desarrolladores",
+                channel: "People & Culture Tech",
+                category: "Marca",
+                duration: "30 min",
+                youtubeUrl: "https://www.youtube.com/results?search_query=employer+branding+it+talent",
+                thumbnail: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=400"
+            }
+        ];
+
+        /* ==========================================================================
+           APP STATE & INITIALIZATION
+           ========================================================================== */
+
+        let currentQuizIndex = 0;
+        let quizScore = 0;
+        let quizAnswers = [];
+        let completedHabits = JSON.parse(localStorage.getItem('ithr_habits')) || [];
+        let favoriteVideos = JSON.parse(localStorage.getItem('ithr_fav_videos')) || [];
+        let bookedAppointments = JSON.parse(localStorage.getItem('ithr_appointments')) || [];
+        let deferredPwaPrompt = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initApp();
+            initQuiz();
+            renderGuide();
+            renderMentors();
+            renderVideos('all');
+            renderAppointments();
+            initPWA();
+        });
+
+        function initApp() {
+            // Theme toggle
+            const themeToggleBtn = document.getElementById('themeToggleBtn');
+            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.classList.add('dark');
+            }
+            themeToggleBtn.addEventListener('click', () => {
+                document.documentElement.classList.toggle('dark');
+            });
+        }
+
+        /* ==========================================================================
+           NAVIGATION TABS
+           ========================================================================== */
+        function switchTab(tabId) {
+            document.querySelectorAll('.app-section').forEach(sec => sec.classList.add('hidden'));
+            document.querySelectorAll('.nav-tab-btn').forEach(btn => {
+                btn.classList.remove('text-cyan-400', 'font-bold');
+                btn.classList.add('text-slate-400');
+            });
+
+            document.getElementById(`sec-${tabId}`).classList.remove('hidden');
+            const activeNav = document.getElementById(`tab-${tabId}`);
+            if (activeNav) {
+                activeNav.classList.add('text-cyan-400', 'font-bold');
+                activeNav.classList.remove('text-slate-400');
+            }
+        }
+
+        /* ==========================================================================
+           1. QUIZ LOGIC
+           ========================================================================== */
+        function initQuiz() {
+            currentQuizIndex = 0;
+            quizScore = 0;
+            quizAnswers = [];
+            document.getElementById('quizScoreDisplay').textContent = `${quizScore} pts`;
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const q = quizData[currentQuizIndex];
+            document.getElementById('quizProgressText').textContent = `Pregunta ${currentQuizIndex + 1} de ${quizData.length}`;
+            document.getElementById('quizCategoryBadge').textContent = q.category;
+            document.getElementById('quizQuestionText').textContent = q.question;
+
+            const container = document.getElementById('quizOptionsContainer');
+            container.innerHTML = '';
+
+            const feedbackBox = document.getElementById('quizFeedbackBox');
+            feedbackBox.classList.add('hidden');
+            document.getElementById('btnNextQuestion').classList.add('hidden');
+
+            q.options.forEach((optText, optIdx) => {
+                const btn = document.createElement('button');
+                btn.className = 'w-full text-left p-4 rounded-2xl bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700/80 text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-200 border border-slate-200/80 dark:border-slate-700/60 transition flex items-start space-x-3';
+                btn.onclick = () => selectQuizOption(optIdx, btn);
+                btn.innerHTML = `
+                    <span class="w-6 h-6 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 flex items-center justify-center font-bold text-xs shrink-0">${String.fromCharCode(65 + optIdx)}</span>
+                    <span>${optText}</span>
+                `;
+                container.appendChild(btn);
+            });
+        }
+
+        function selectQuizOption(selectedIdx, btnElement) {
+            const q = quizData[currentQuizIndex];
+            const optionsBtns = document.getElementById('quizOptionsContainer').children;
+
+            // Disable all options
+            for (let b of optionsBtns) {
+                b.disabled = true;
+                b.classList.add('opacity-60', 'cursor-not-allowed');
+            }
+
+            const feedbackBox = document.getElementById('quizFeedbackBox');
+            const feedbackTitle = document.getElementById('quizFeedbackTitle');
+            const feedbackDesc = document.getElementById('quizFeedbackDesc');
+
+            feedbackBox.classList.remove('hidden');
+
+            if (selectedIdx === q.correct) {
+                quizScore += 20;
+                document.getElementById('quizScoreDisplay').textContent = `${quizScore} pts`;
+                btnElement.classList.remove('opacity-60', 'bg-slate-100', 'dark:bg-slate-800/80');
+                btnElement.classList.add('bg-emerald-500/10', 'border-emerald-500', 'text-emerald-600', 'dark:text-emerald-400');
+                
+                feedbackBox.className = 'p-4 rounded-2xl text-xs space-y-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-300';
+                feedbackTitle.textContent = '¡Correcto! Excelente análisis.';
+            } else {
+                btnElement.classList.remove('opacity-60', 'bg-slate-100', 'dark:bg-slate-800/80');
+                btnElement.classList.add('bg-rose-500/10', 'border-rose-500', 'text-rose-600', 'dark:text-rose-400');
+
+                // Highlight correct option
+                optionsBtns[q.correct].classList.remove('opacity-60');
+                optionsBtns[q.correct].classList.add('bg-emerald-500/10', 'border-emerald-500', 'text-emerald-600', 'dark:text-emerald-400');
+
+                feedbackBox.className = 'p-4 rounded-2xl text-xs space-y-1 bg-rose-500/10 border border-rose-500/20 text-rose-700 dark:text-rose-300';
+                feedbackTitle.textContent = 'Respuesta Incorrecta';
+            }
+
+            feedbackDesc.textContent = q.explanation;
+            document.getElementById('btnNextQuestion').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            if (currentQuizIndex < quizData.length - 1) {
+                currentQuizIndex++;
+                renderQuestion();
+            } else {
+                showQuizResult();
+            }
+        }
+
+        function showQuizResult() {
+            const card = document.getElementById('quizCard');
+            card.innerHTML = `
+                <div class="text-center py-8 space-y-4">
+                    <div class="w-20 h-20 mx-auto rounded-3xl bg-gradient-to-tr from-brand-600 to-cyan-400 text-white flex items-center justify-center text-3xl shadow-xl shadow-brand-500/30">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white">¡Cuestionario Completado!</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto">Has alcanzado una puntuación de <strong class="text-brand-600 dark:text-cyan-400 text-lg">${quizScore} / 100 puntos</strong>.</p>
+                    <button onclick="resetQuiz()" class="bg-brand-600 hover:bg-brand-700 text-white font-bold px-6 py-3 rounded-2xl text-xs shadow-md transition">
+                        Volver a Intentar
+                    </button>
+                </div>
+            `;
+        }
+
+        function resetQuiz() {
+            location.reload();
+        }
+
+        /* ==========================================================================
+           2. PRACTICAL GUIDE LOGIC
+           ========================================================================== */
+        function renderGuide() {
+            const container = document.getElementById('guideModulesContainer');
+            container.innerHTML = '';
+
+            let totalHabits = 0;
+
+            guideModules.forEach(mod => {
+                const modCard = document.createElement('div');
+                modCard.className = 'glass-panel p-5 rounded-3xl space-y-3';
+                
+                let habitsHtml = '';
+                mod.habits.forEach(h => {
+                    totalHabits++;
+                    const isChecked = completedHabits.includes(h.id);
+                    habitsHtml += `
+                        <label class="flex items-start space-x-3 cursor-pointer p-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/50 transition">
+                            <input type="checkbox" ${isChecked ? 'checked' : ''} onchange="toggleHabit('${h.id}')" class="mt-0.5 w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500">
+                            <span class="text-xs font-medium ${isChecked ? 'line-through text-slate-400 dark:text-slate-500' : 'text-slate-700 dark:text-slate-300'}">${h.text}</span>
+                        </label>
+                    `;
+                });
+
+                modCard.innerHTML = `
+                    <div class="flex items-center space-x-3 border-b border-slate-200 dark:border-slate-800 pb-3">
+                        <div class="w-8 h-8 rounded-xl bg-brand-50 dark:bg-brand-900/40 text-brand-600 dark:text-cyan-400 flex items-center justify-center text-sm font-bold">
+                            <i class="${mod.icon}"></i>
+                        </div>
+                        <h3 class="font-bold text-sm text-slate-900 dark:text-white">${mod.title}</h3>
+                    </div>
+                    <div class="space-y-1">
+                        ${habitsHtml}
+                    </div>
+                `;
+                container.appendChild(modCard);
+            });
+
+            updateGuideProgress(totalHabits);
+        }
+
+        function toggleHabit(habitId) {
+            if (completedHabits.includes(habitId)) {
+                completedHabits = completedHabits.filter(id => id !== habitId);
+            } else {
+                completedHabits.push(habitId);
+            }
+            localStorage.setItem('ithr_habits', JSON.stringify(completedHabits));
+            renderGuide();
+        }
+
+        function updateGuideProgress(totalHabits) {
+            const count = completedHabits.length;
+            const percent = totalHabits > 0 ? Math.round((count / totalHabits) * 100) : 0;
+            document.getElementById('guideProgressBar').style.width = `${percent}%`;
+            document.getElementById('guideProgressPercent').textContent = `${percent}% completado`;
+            document.getElementById('guideProgressCount').textContent = `${count} de ${totalHabits} hábitos listos`;
+        }
+
+        /* ==========================================================================
+           3. MENTORSHIP LOGIC
+           ========================================================================== */
+        function renderMentors() {
+            const grid = document.getElementById('mentorsListGrid');
+            grid.innerHTML = '';
+
+            mentorsData.forEach(m => {
+                const card = document.createElement('div');
+                card.className = 'glass-panel p-5 rounded-3xl space-y-4 flex flex-col justify-between border border-slate-200 dark:border-slate-800 hover:border-brand-500/50 transition';
+                card.innerHTML = `
+                    <div class="space-y-3">
+                        <div class="flex items-center space-x-3">
+                            <img src="${m.avatar}" alt="${m.name}" class="w-12 h-12 rounded-2xl object-cover shadow-sm">
+                            <div>
+                                <h4 class="font-bold text-sm text-slate-900 dark:text-white">${m.name}</h4>
+                                <p class="text-[11px] text-brand-600 dark:text-cyan-400 font-semibold">${m.role} @ ${m.company}</p>
+                                <span class="text-[10px] text-slate-400 font-medium">${m.exp}</span>
+                            </div>
+                        </div>
+                        <div class="text-xs text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800/60 p-3 rounded-2xl">
+                            <strong class="block text-[10px] text-slate-400 uppercase tracking-wider mb-0.5">Especialidad:</strong>
+                            ${m.specialty}
+                        </div>
+                    </div>
+
+                    <div class="pt-2 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                        <div class="flex items-center space-x-1 text-xs font-bold text-amber-500">
+                            <i class="fa-solid fa-star"></i>
+                            <span>${m.rating}</span>
+                            <span class="text-slate-400 text-[10px]">(${m.reviews})</span>
+                        </div>
+                        <button onclick="requestMentorship('${m.name}')" class="bg-brand-600 hover:bg-brand-700 text-white font-bold px-3.5 py-2 rounded-xl text-xs transition shadow-sm">
+                            Reservar Cita
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function requestMentorship(mentorName) {
+            document.getElementById('bookingMentorName').value = mentorName;
+            document.getElementById('bookingMentorDisplay').value = mentorName;
+            document.getElementById('bookingModal').classList.remove('hidden');
+        }
+
+        function openBookingModal() {
+            document.getElementById('bookingMentorName').value = "Cualquier Experto Disponible";
+            document.getElementById('bookingMentorDisplay').value = "Selección General";
+            document.getElementById('bookingModal').classList.remove('hidden');
+        }
+
+        function closeBookingModal() {
+            document.getElementById('bookingModal').classList.add('hidden');
+        }
+
+        document.getElementById('mentorBookingForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const mentor = document.getElementById('bookingMentorName').value;
+            const userName = document.getElementById('bookingUserName').value;
+            const topic = document.getElementById('bookingTopic').value;
+            const date = document.getElementById('bookingDate').value;
+            const time = document.getElementById('bookingTime').value;
+
+            const newAppt = {
+                id: Date.now(),
+                mentor,
+                userName,
+                topic,
+                date,
+                time
+            };
+
+            bookedAppointments.unshift(newAppt);
+            localStorage.setItem('ithr_appointments', JSON.stringify(bookedAppointments));
+            renderAppointments();
+            
+            alert(`¡Cita agendada con éxito para el ${date} a las ${time}! Te enviaremos el enlace de videollamada.`);
+            document.getElementById('mentorBookingForm').reset();
+            closeBookingModal();
+        });
+
+        function renderAppointments() {
+            const list = document.getElementById('bookedAppointmentsList');
+            list.innerHTML = '';
+
+            if (bookedAppointments.length === 0) {
+                list.innerHTML = '<p class="text-xs text-slate-400 italic">No tienes citas agendadas actualmente.</p>';
+                return;
+            }
+
+            bookedAppointments.forEach(a => {
+                const item = document.createElement('div');
+                item.className = 'bg-slate-100 dark:bg-slate-800 p-3 rounded-xl text-xs flex justify-between items-center';
+                item.innerHTML = `
+                    <div>
+                        <p class="font-bold text-slate-800 dark:text-slate-200">${a.topic}</p>
+                        <p class="text-[10px] text-slate-500">Mentor: ${a.mentor} &bull; ${a.date} (${a.time})</p>
+                    </div>
+                    <button onclick="cancelAppointment(${a.id})" class="text-slate-400 hover:text-red-500 p-1">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        function cancelAppointment(id) {
+            bookedAppointments = bookedAppointments.filter(a => a.id !== id);
+            localStorage.setItem('ithr_appointments', JSON.stringify(bookedAppointments));
+            renderAppointments();
+        }
+
+        /* ==========================================================================
+           4. YOUTUBE RESOURCES LOGIC
+           ========================================================================== */
+        function renderVideos(filter) {
+            const grid = document.getElementById('youtubeVideoGrid');
+            grid.innerHTML = '';
+
+            let filterList = youtubeVideos;
+            if (filter === 'favs') {
+                filterList = youtubeVideos.filter(v => favoriteVideos.includes(v.id));
+            } else if (filter !== 'all') {
+                filterList = youtubeVideos.filter(v => v.category === filter);
+            }
+
+            if (filterList.length === 0) {
+                grid.innerHTML = '<div class="col-span-full text-center py-8 text-xs text-slate-400">No hay vídeos guardados en esta categoría.</div>';
+                return;
+            }
+
+            filterList.forEach(v => {
+                const isFav = favoriteVideos.includes(v.id);
+                const card = document.createElement('div');
+                card.className = 'glass-panel rounded-3xl overflow-hidden flex flex-col justify-between border border-slate-200 dark:border-slate-800 hover:shadow-lg transition';
+                card.innerHTML = `
+                    <div>
+                        <div class="relative aspect-video bg-slate-900 group cursor-pointer" onclick="openYouTube('${v.youtubeUrl}')">
+                            <img src="${v.thumbnail}" alt="${v.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            <div class="absolute inset-0 bg-slate-950/40 group-hover:bg-slate-950/20 transition flex items-center justify-center">
+                                <div class="w-12 h-12 rounded-full bg-red-600 text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition">
+                                    <i class="fa-solid fa-play text-lg ml-1"></i>
+                                </div>
+                            </div>
+                            <span class="absolute bottom-2 right-2 bg-slate-900/80 backdrop-blur text-white text-[10px] font-bold px-2 py-0.5 rounded-md">${v.duration}</span>
+                        </div>
+
+                        <div class="p-4 space-y-2">
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-brand-50 dark:bg-brand-900/40 text-brand-600 dark:text-cyan-400">${v.category}</span>
+                            <h4 class="font-bold text-sm text-slate-900 dark:text-white leading-snug">${v.title}</h4>
+                            <p class="text-[11px] text-slate-400 font-medium"><i class="fa-brands fa-youtube text-red-500 mr-1"></i>${v.channel}</p>
+                        </div>
+                    </div>
+
+                    <div class="p-4 pt-0 flex justify-between items-center">
+                        <button onclick="toggleFavVideo('${v.id}')" class="text-xs text-slate-400 hover:text-red-500 transition flex items-center gap-1 font-semibold">
+                            <i class="${isFav ? 'fa-solid fa-heart text-red-500' : 'fa-regular fa-heart'} text-sm"></i>
+                            <span>${isFav ? 'Favorito' : 'Guardar'}</span>
+                        </button>
+                        <button onclick="openYouTube('${v.youtubeUrl}')" class="text-xs text-brand-600 dark:text-cyan-400 hover:underline font-bold">
+                            Ver en YouTube <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1"></i>
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterVideos(category) {
+            document.querySelectorAll('.vcat-btn').forEach(btn => {
+                btn.classList.remove('bg-brand-600', 'text-white');
+                btn.classList.add('bg-slate-200', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300');
+            });
+            const activeBtn = document.getElementById(`vcat-${category}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-slate-200', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300');
+                activeBtn.classList.add('bg-brand-600', 'text-white');
+            }
+            renderVideos(category);
+        }
+
+        function toggleFavVideo(videoId) {
+            if (favoriteVideos.includes(videoId)) {
+                favoriteVideos = favoriteVideos.filter(id => id !== videoId);
+            } else {
+                favoriteVideos.push(videoId);
+            }
+            localStorage.setItem('ithr_fav_videos', JSON.stringify(favoriteVideos));
+            renderVideos('all');
+        }
+
+        function openYouTube(url) {
+            window.open(url, '_blank');
+        }
+
+        /* ==========================================================================
+           5. PWA & GITHUB MODAL INSTRUCTION LOGIC
+           ========================================================================== */
+        function initPWA() {
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPwaPrompt = e;
+                document.getElementById('pwaInstallCard').classList.remove('hidden');
+            });
+
+            document.getElementById('btnInstallApp').addEventListener('click', async () => {
+                if (deferredPwaPrompt) {
+                    deferredPwaPrompt.prompt();
+                    const { outcome } = await deferredPwaPrompt.userChoice;
+                    if (outcome === 'accepted') {
+                        document.getElementById('pwaInstallCard').classList.add('hidden');
+                    }
+                    deferredPwaPrompt = null;
+                }
+            });
+
+            // Register Inline Service Worker
+            if ('serviceWorker' in navigator) {
+                const swContent = `
+                    const CACHE = 'ithr-cache-v1';
+                    self.addEventListener('install', (e) => {
+                        e.waitUntil(caches.open(CACHE).then(c => c.addAll(['./', './index.html'])));
+                    });
+                    self.addEventListener('fetch', (e) => {
+                        e.respondWith(caches.match(e.request).then(res => res || fetch(e.request)));
+                    });
+                `;
+                const swBlob = new Blob([swContent], { type: 'application/javascript' });
+                navigator.serviceWorker.register(URL.createObjectURL(swBlob))
+                    .then(() => console.log('Service Worker PWA Registrado.'))
+                    .catch(err => console.log('SW Error:', err));
+            }
+        }
+
+        function openGitHubInstructions() {
+            document.getElementById('githubModal').classList.remove('hidden');
+        }
+
+        function closeGitHubInstructions() {
+            document.getElementById('githubModal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
